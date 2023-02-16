@@ -33,27 +33,34 @@ public class Song {
 	public Song(String info) {
 		int second = 0;;
 		int minute = 0;
+		int hour = 0; 
+		
 		String[] information = info.split(INFO_DELIMITER);
 		this.title = information[IDX_TITLE];
 		this.artist = information[IDX_ARTIST];
 		
 		String[] timeInfo = information[IDX_TIME].split(TIME_DELIMITER);
+		this.time = new int[timeInfo.length];
 		
-		if (timeInfo.length == 1) {
+		if (time.length == 1) {
 			second = Integer.parseInt(timeInfo[0]);
 			this.time[0] = second; 
 		}
+		else if (time.length == 2){
+			minute = Integer.parseInt(timeInfo[0]);
+			second = Integer.parseInt(timeInfo[1]); 
+	
+			this.time[0] = second;
+			this.time[1] = minute;
+		}
 		else {
-			second = Integer.parseInt(timeInfo[0]);
+			hour = Integer.parseInt(timeInfo[0]);
 			minute = Integer.parseInt(timeInfo[1]); 
+			second = Integer.parseInt(timeInfo[2]); 
 			
-			if (minute < 60) {
-				this.time[0] = second;
-				this.time[1] = minute;
-			}
-			else {
-				this.time[0] = second; 
-			}
+			this.time[0] = second;
+			this.time[1] = minute;
+			this.time[2] = hour; 
 		}
 	
 }
