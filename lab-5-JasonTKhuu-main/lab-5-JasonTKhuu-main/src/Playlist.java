@@ -5,7 +5,7 @@ public class Playlist {
 	private ArrayList<Song> songs;
 	
 	public Playlist() {
-		// TODO: Initialize the songs field.
+		this.songs = new ArrayList<Song>(); 
 	}
 	
 	public int getNumSongs() {

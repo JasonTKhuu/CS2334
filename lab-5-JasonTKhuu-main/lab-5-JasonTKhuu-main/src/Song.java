@@ -65,13 +65,13 @@ public class Song {
 	
 }
 	public String toString() {
-		if (time[0] < 60) {
+		if (time.length == 1) {
 			return title + INFO_DELIMITER + artist + INFO_DELIMITER + String.format("%02d", time[0]);  
 		}
-		else if (time[1] < 60) {
-			return title + INFO_DELIMITER + artist + INFO_DELIMITER + String.format("%02d", time[1]) + INFO_DELIMITER + String.format("%02d", time[1]);  
+		else if (time.length == 2) {
+			return title + INFO_DELIMITER + artist + INFO_DELIMITER + time[1] + TIME_DELIMITER + String.format("%02d", time[0]);  
 		}
 		
-		return title + INFO_DELIMITER + artist + INFO_DELIMITER + String.format("%02d", time[1]) + TIME_DELIMITER + String.format("%02d", time[0]);  
+		return title + INFO_DELIMITER + artist + INFO_DELIMITER + time[2] + TIME_DELIMITER + String.format("%02d", time[1]) + TIME_DELIMITER + String.format("%02d", time[0]);  
 	}
 }
