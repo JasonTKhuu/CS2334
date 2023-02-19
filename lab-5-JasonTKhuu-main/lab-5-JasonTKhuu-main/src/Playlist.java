@@ -1,5 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner; 
 
@@ -126,17 +129,56 @@ public class Playlist {
 		return songs.remove(index); 
 	}
 	
-	public void saveSongs(String filename) throws FileNotFoundException {
-
+	public void saveSongs(String filename) throws IOException {
+		PrintWriter writer = new PrintWriter(new FileWriter(filename, false)); 
+		
+		writer.print(this.toString());
+		
+		writer.close();
 	}
 	
 	public int[] getTotalTime() {
 		
-		return null; // Stub
+		int[] keepValue; 
+		
+		int totalTime = 0; 
+		
+		if (getNumSongs() == 0) {
+			keepValue = new int[1]; 
+			keepValue[0] = 0;
+			
+			return keepValue;
+		}
+		
+		Song song = songs.get(getNumSongs() - 1); 
+		
+		int[] newSong = song.getTime(); 
+		
+		for (int index = 0; index < newSong.length; ++index) {
+			totalTime += newSong[index]; 
+		}
+		
+		if (newSong.length == 1) {
+			keepValue = new int[newSong.length];
+			keepValue[0] = totalTime; 
+		}
+		else if (newSong.length == 2) {
+			keepValue = new int[newSong.length]; 
+			keepValue[0] = totalTime / 60;
+			keepValue[1] = totalTime % 60;
+		}
+		else {
+			keepValue = new int[newSong.length]; 
+			keepValue[0] = totalTime / 60;
+			keepValue[1] = totalTime % 60;
+		}
+		
+		
+		return keepValue; // Stub
 	}
 	
 	public String toString() {
-		
-		return ""; // Stub 
+
+		return songs.get(getNumSongs()) + System.lineSeparator(); // Stub 
 	}
 }
