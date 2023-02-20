@@ -40,15 +40,13 @@ public class Playlist {
 	
 	public boolean addSong(int index, Song song) {
 		// TODO: Update the Lab 3 method.
-		if (song == null || index < 0 || index > getNumSongs() + 1) {
+		if (song == null || index < 0 || index >= getNumSongs() + 1) {
 			return false;
 		}
 		else {
-			songs.add(null); 
-			this.songs.set(index, song); 
+			this.songs.add(index, song); 
 			return true;
 		}
-		
 	}
 	
 	public int addSongs(String filename) throws FileNotFoundException {
@@ -122,7 +120,7 @@ public class Playlist {
 	
 	public Song removeSong(int index) {
 		// TODO: Update the Lab 3 method.
-		if (index < 0 || index >= getNumSongs() + 1) {
+		if (index < 0 || index >= getNumSongs()) {
 			return null;
 		}
 		
@@ -139,7 +137,11 @@ public class Playlist {
 	
 	public int[] getTotalTime() {
 		
-		int[] keepValue; 
+		int[] keepValue = null; 
+		
+		int minutes = 0;
+		int seconds = 0;
+		int hour = 0;
 		
 		int totalTime = 0; 
 		
@@ -159,26 +161,50 @@ public class Playlist {
 		}
 		
 		if (newSong.length == 1) {
-			keepValue = new int[newSong.length];
-			keepValue[0] = totalTime; 
+			
+			keepValue = new int[newSong.length]; 
+			
+			seconds = totalTime; 
+			if (seconds >= 60) {
+				++minutes;
+				seconds -= 60;
+				keepValue[0] = seconds; 
+			}
+			else {
+				keepValue[0] = seconds; 
+			}
 		}
 		else if (newSong.length == 2) {
 			keepValue = new int[newSong.length]; 
-			keepValue[0] = totalTime / 60;
-			keepValue[1] = totalTime % 60;
+			
+			seconds = totalTime; 
+			
+			if (seconds >= 60) {
+				minutes = seconds / 60; 
+				seconds = (seconds / 60) - 60; 
+				
+				keepValue[0] = seconds; 
+				keepValue[1] = minutes; 
+			}
+			else {
+				keepValue[0] = seconds;
+				keepValue[1] = minutes; 
+			}
+			
 		}
-		else {
-			keepValue = new int[newSong.length]; 
-			keepValue[0] = totalTime / 60;
-			keepValue[1] = totalTime % 60;
-		}
-		
 		
 		return keepValue; // Stub
-	}
+}
 	
 	public String toString() {
-
-		return songs.get(getNumSongs()) + System.lineSeparator(); // Stub 
+			
+		String info = "";
+		
+		for (int index = 0; index < getNumSongs(); ++index) {
+				info += songs.get(index) + System.lineSeparator(); 
+		}
+		
+		info = info.trim(); 
+		return info; // Stub 
 	}
 }
