@@ -27,26 +27,12 @@ public class Convert {
 				
 				lat = afterRemoving(info); 
 				lon = afterRemoving(info); 
-				int lengthOfString = 0;
 				
-				// Since both lat and lon are the same length since they still have the same values together
-				lengthOfString = lat.length();
-				
-				if (lengthOfString == 17) {
-					lat = lat.replaceAll(lat.substring(8), ""); 
-					lon = lon.replaceAll(lon.substring(0, 8), "");
-				}
-				else if (lengthOfString == 18) {
-					lat = lat.replaceAll(lat.substring(8), ""); 
-					lon = lon.replaceAll(lon.substring(0, 8), "");
-				}
-				else if (lengthOfString == 19) {
-					lat = lat.replaceAll(lat.substring(9), ""); 
-					lon = lon.replaceAll(lon.substring(0, 9), "");
-				}
-				else if (lengthOfString == 20) {
-					
-				}
+				// Since the longitude will always be with a negative sign, it will split the numbers
+				// in two leading to the assingment of the correct numbers to latitude and longitude
+				String[] values = lat.split("-"); 
+				lat = values[0];
+				lon = values[1]; 
 				
 				// Code before creating a method that does the removal of unwanted strings 
 //				// Latitude
@@ -66,7 +52,7 @@ public class Convert {
 //				lon = lon.replaceAll(">", ""); 
 				
 				
-				String output = increment + "," + lat + "," + lon;
+				String output = increment + "," + lat + ",-" + lon;
 				
 				write.print(output); 
 				write.println();
@@ -85,14 +71,7 @@ public class Convert {
 		info = info.replaceAll("\\s", ""); 
 		info = info.replaceAll("\"", ""); 
 		info = info.replaceAll(">", "");
-		
-		for (int index = 0; index < info.length(); ++index) {
-			if (info.charAt(index) == '?') {
-				String remove = Character.toString(info.charAt(index));
-				
-				info.replace(remove, "");
-			}
-		}
+		info = info.replaceAll("\\?", ""); 
 		
 		return info; 
 	}
