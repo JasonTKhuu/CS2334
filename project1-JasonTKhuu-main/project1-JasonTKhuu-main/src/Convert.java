@@ -24,18 +24,49 @@ public class Convert {
 			
 			if (info.contains("<trkpt")) {
 				
-				lat = info.replaceAll("<trkpt", "");
-				lon = info.replaceAll("<trkpt", "");
-				lat = lat.replaceAll("lat=", "");
-				lon = lon.replaceAll("lon=", ""); 
-				lat = lat.replaceAll(" ", ""); 
-				lon = lon.replaceAll(" ", ""); 
-				lat = lat.replaceAll("\"", ""); 
-				lon = lon.replaceAll("\"", ""); 
-				lat = lat.replaceAll(">", "");
-				lon = lon.replaceAll(">", ""); 
 				
-				String output = increment + ", " + lat + ", " + lon;
+				lat = afterRemoving(info); 
+				lon = afterRemoving(info); 
+				int lengthOfString = 0;
+				
+				// Since both lat and lon are the same length since they still have the same values together
+				lengthOfString = lat.length();
+				
+				if (lengthOfString == 17) {
+					lat = lat.replaceAll(lat.substring(8), ""); 
+					lon = lon.replaceAll(lon.substring(0, 8), "");
+				}
+				else if (lengthOfString == 18) {
+					lat = lat.replaceAll(lat.substring(8), ""); 
+					lon = lon.replaceAll(lon.substring(0, 8), "");
+				}
+				else if (lengthOfString == 19) {
+					lat = lat.replaceAll(lat.substring(9), ""); 
+					lon = lon.replaceAll(lon.substring(0, 9), "");
+				}
+				else if (lengthOfString == 20) {
+					
+				}
+				
+				// Code before creating a method that does the removal of unwanted strings 
+//				// Latitude
+//				lat = info.replaceAll("<trkpt", "");
+//				lat = lat.replaceAll("lat=", "");
+//				lat = lat.replaceAll("lon=", "");
+//				lat = lat.replaceAll("\\s", ""); 
+//				lat = lat.replaceAll("\"", ""); 
+//				lat = lat.replaceAll(">", "");
+//				
+//				// Longitude
+//				lon = info.replaceAll("<trkpt", "");
+//				lon = lon.replaceAll("lon=", ""); 
+//				lon = lat.replaceAll("lat=", "");
+//				lon = lon.replaceAll("\\s", ""); 
+//				lon = lon.replaceAll("\"", ""); 
+//				lon = lon.replaceAll(">", ""); 
+				
+				
+				String output = increment + "," + lat + "," + lon;
 				
 				write.print(output); 
 				write.println();
@@ -44,5 +75,25 @@ public class Convert {
 		}
 		write.close(); 
 		input.close(); 
+	}
+	
+	public static String afterRemoving(String info) {
+		
+		info = info.replaceAll("<trkpt", "");
+		info = info.replaceAll("lat=", "");
+		info = info.replaceAll("lon=", "");
+		info = info.replaceAll("\\s", ""); 
+		info = info.replaceAll("\"", ""); 
+		info = info.replaceAll(">", "");
+		
+		for (int index = 0; index < info.length(); ++index) {
+			if (info.charAt(index) == '?') {
+				String remove = Character.toString(info.charAt(index));
+				
+				info.replace(remove, "");
+			}
+		}
+		
+		return info; 
 	}
 }
